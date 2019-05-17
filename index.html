@@ -1,0 +1,107 @@
+<!doctype html>
+<head>
+<title>Penguin Identifier</title>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/penguin-data.js"></script>
+<script type="text/javascript" src="js/result-view-model.js"></script>
+<script type="text/javascript" src="js/app-view-model.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel= "stylesheet" type= "text/css" href= "css/styles.css">
+</head>
+    <body>
+
+    <div class=container>
+    <div class="header">
+        <h1>Penguin Identifier</h1>
+    </div>
+    <p>This app is using deep learning to try to recognise penguin species. 
+        The training data set was compiled from Google Images, and the model was trained using the 
+        <a href="https://www.fast.ai/">fast.ai library</a>.</p>
+
+    <!-- Upload Image -->
+    <div data-bind="if: showUploadForm">
+            <form enctype="multipart/form-data">
+                <div class="container-box">
+                        <div data-bind="if: showUploadStep1">
+                        <h1>Select an image</h1>
+                        <p>Choose an image of a penguin, and we will try and identify the species.</p>
+                        <label class="btn btn-info btn-lg">
+                            Choose Image 
+                            <input type="file" name="file" id="image-file" accept="image/jpeg" style="display: none;"
+                                   data-bind="event: { change: fileSelected }">
+                        </label>
+                    </div>
+                    <div data-bind="if: showUploadStep2">
+                        <div class="image-container">
+                            <img data-bind="attr: { src: testImageSrc }">
+                        </div>
+                        <button data-bind="click: doProcess" id="do-submit" class="btn btn-info btn-lg">Go!</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results-->
+        <div data-bind="if: showResults" >
+            <div data-bind="using: result" class="container-box">
+                <h3>Prediction: <span data-bind="text: prediction.displayCategory"></span> Penguin</h3>
+                <div class="row result-row">
+                    <div class="col-sm">
+                        <div class="alert" data-bind="class: boxClass">
+                            <div class="image-container">
+                                <img data-bind="attr: { src: $parent.testImageSrc }">
+                            </div>
+                            <p class="caption" data-bind="text: info"></p>
+                            <div>
+                                <h4>How confident are we? <span data-bind="text: prediction.percentage"></span>%</h4>
+                            </div>
+                            <div class="progress" data-bind="html: progressBarHtml">
+                            </div>
+            
+                            <!-- show if there are other predictions -->
+                            <div id="other-preds">
+                                <p>Other Predictions:</p>
+                                <ul data-bind="foreach: otherPredictions">
+                                    <li><span data-bind="text: display_category"></span>  Penguin: <span data-bind="text: percentage"></span>%</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm" >
+                        <div class = "alert alert-info">
+                            <h4><span data-bind="text: prediction.displayCategory"></span> Penguin</h4>
+                            <div class="image-container">
+                                <img data-bind="attr: { src: categoryItem.imageSrc, alt: prediction.displayCategory }">
+                            </div>
+                            <p class="caption"><a data-bind="attr: { href: categoryItem.origPhotoLink }">Photo</a> by 
+                                                <a data-bind="attr: { href: categoryItem.photoByLink }"><span data-bind="text: categoryItem.photoBy"></span></a>
+                            </p>
+                            <div>
+                                <p><span class="info-header">Location: </span><span data-bind="text: categoryItem.location"></span></p>
+                                <p><span class="info-header">Conservation Status:</span><span data-bind="text: categoryItem.status"></span></p>
+                                <p><span class="info-header">Appearance: </span><span data-bind="text: categoryItem.appearance"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>      
+            <div id="new-image" class="link-btn">
+                <a href="#" data-bind="click: tryAnother" class="btn btn-info btn-lg"> Try another image</a>
+            </div>       
+        </div>
+
+        <div data-bind="if: showError">
+            <div class="alert alert-danger">
+                <p>An error occured during processing. Please try again later.</p>
+            </div> 
+            <a href="#" data-bind="click: tryAnother" class="btn btn-info btn-lg"> Try again</a>
+        </div>
+
+
+
+    </div>
+</body>
