@@ -1,15 +1,14 @@
 
-img {
+.img-resp {
     width: auto;
-    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .image-container {
-    width: 300px;
+    width: 400px;
     height: 300px;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    margin-right: 5px;
+    overflow: hidden;
 }
 
 .link-btn {
@@ -18,27 +17,31 @@ img {
 }
 
 .header {
-   background-color: #17a2b8;
+   background-color: #45627E;
    color: white;
    padding: 10px;
+   height: 120px;
 }
 
-.container-fluid {
-    padding-right:0;
-    padding-left:0;
- }
+.header h1 {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.header2 {
+    height: 20px;
+    background-color: #17a2b8;
+    margin-bottom: 10px;
+}
 
  .container-box {
      padding: 30px;
-     border: #17a2b8 1px solid;
+     border: #45627E 1px solid;
+     margin-bottom: 5px;
  }
 
  .caption {
      font-size: 0.75em;
- }
-
- .btn-info {
-     margin-top: 10px;
  }
 
  .other-preds {
@@ -46,10 +49,15 @@ img {
  }
 
  .info-box {
-     font-size: 0.75em;
+     height: 100%;
  }
 
  .info-header {
      font-weight: bold;
      margin-right: 10px;
+ }
+
+ .progress {
+     margin-top: 5px;
+     margin-bottom: 10px;
  }

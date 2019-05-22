@@ -7,6 +7,7 @@ var Prediction = function(data) {
 }
   
 var CategoryInfo = function(data) {
+    this.title = ko.observable(data.title);
     this.imageSrc = ko.observable(data.img_src);
     this.photoBy = ko.observable(data.photo_by);
     this.photoByLink = ko.observable(data.photo_by_link);
@@ -14,10 +15,23 @@ var CategoryInfo = function(data) {
     this.appearance = ko.observable(data.info);
     this.location = ko.observable(data.location);
     this.status = ko.observable(data.status);
+
+    this.update = function(data){
+      this.title(data.title);
+      this.imageSrc(data.img_src);
+      this.photoBy(data.photo_by);
+      this.photoByLink(data.photo_by_link);
+      this.origPhotoLink(data.orig_photo_link);
+      this.appearance(data.info);
+      this.location(data.location);
+      this.status(data.status);
+    }
 }
 
 
-var ResultModel = function(data) {
+var ResultModel = function(data, imageWidth, imageHeight, imageSrc) {
+  
+    resultModel = this;
 
     var penguinData = new PenguinData();
   
@@ -47,22 +61,59 @@ var ResultModel = function(data) {
 
     var getBoxClass = function(percentage) {
         if (percentage > 60){
-            bClass = 'alert-success';
+            return 'alert-success';
           } else if (percentage < 30){
-            bClass = 'alert-danger';
+            return 'alert-danger';
           } else {
-            bClass = 'alert-warning';
+            return 'alert-warning';
           }
     }
+
+    var getImageHtml = function(data, imageWidth, imageHeight, imageSrc){
+      transform = '';
+      widthAndHeight = 'width='+ imageWidth + ' height=' + imageHeight;
+      if (data.rotate === 90) {
+        widthAndHeight = getWidthAndHeight(imageWidth, imageHeight);
+        transform = 'style="transform: rotate(-90deg); transform-origin: center bottom;"';
+      } else if (data.rotate === 270) {
+        widthAndHeight = getWidthAndHeight(imageWidth, imageHeight);
+        transform = 'style="transform: rotate(-270deg); transform-origin: center bottom;"';
+      } else if (data.rotate === 180) {
+        transform = 'style="transform: rotate(-180deg); transform-origin: center bottom;"';
+      } else {
+        transform = '';
+      }
+
+      return '<img src="' + imageSrc + '" ' + transform + ' ' + widthAndHeight + '>';
+    }
+
+    var getWidthAndHeight = function(x, y) {
+      if (x > y && x > 300) {
+        x1 = 300;
+        y1 = Math.round((x1/x)*y)
+        return 'width='+ x1 + ' height=' + y1
+      } else {
+        return 'width='+ x + ' height=' + y;
+      }
+    }
   
-    this.rotate = ko.observable(data.rotate);
-    this.prediction = getPrediction(data.prediction);
-    this.info = ko.observable(data.info);
-    this.otherPredictions = ko.observableArray(data.other_predictions);
-    this.categoryItem = getCategoryItem(data.prediction.category);
-    this.progressBarHtml = ko.observable(getProgressBarHtml(data.prediction.percentage));
-    this.boxClass = ko.pureComputed(function() {
-            getBoxClass(data.prediction.percentage);
-        });
-  
+    resultModel.prediction = getPrediction(data.prediction);
+    resultModel.info = ko.observable(data.info);
+    
+    const showOthers = data.other_predictions.length > 0;
+    resultModel.showOther = ko.observable(showOthers);
+    resultModel.otherPredictions = ko.observableArray(data.other_predictions);
+    if (showOthers) {
+      resultModel.otherPredictions.unshift(data.prediction);
+    }
+    resultModel.categoryItem = getCategoryItem(data.prediction.category);
+    resultModel.progressBarHtml = ko.observable(getProgressBarHtml(data.prediction.percentage));
+    resultModel.boxClass = ko.observable(getBoxClass(data.prediction.percentage));
+    resultModel.imageHtml = ko.observable(getImageHtml(data, imageWidth, imageHeight, imageSrc));
+
+    this.viewCategory = function(otherPred) {
+      const penguinInfo = penguinData.getPenguin(otherPred.category);
+      resultModel.categoryItem.update(penguinInfo);
+   }
+    
   }

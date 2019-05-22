@@ -7,6 +7,17 @@ var AppModel = function() {
     // hold the source for the test image
     self.testImageSrc = ko.observable('');
 
+    // default for image url
+    self.urlPaste = ko.observable('');
+    self.validUrl = ko.observable(false);
+
+    // default error
+    self.errorMessage = ko.observable('An error occurred.')
+
+    // get the image width/height before rotation
+    self.imageWidth = 0;
+    self.imageHeight = 0;
+
     // show/hide variables
     self.showUploadForm = ko.observable();
     self.showUploadStep1 = ko.observable();
@@ -14,13 +25,16 @@ var AppModel = function() {
     self.showResults = ko.observable();
     self.showError = ko.observable();
 
+    // image extention
+    var imageExtension = "";
+
     self.init = function() {
-        initShowHide()
+        initShowHide();
     }
 
     self.fileSelected = function() {
         input = $("#image-file")[0];
-        readUrl(input);
+        readInput(input);
     }
 
     self.doProcess = function() {
@@ -30,9 +44,34 @@ var AppModel = function() {
     self.tryAnother = function() {
         self.testImageSrc('');
         self.result = ko.observable();
+        self.urlPaste = ko.observable('');
+        self.validUrl = ko.observable(false);
         initShowHide();
     }
-   
+
+    self.imageLoaded = function() {
+        image = $("#uploaded-image")
+        self.imageWidth = image.width();
+        self.imageHeight = image.height();
+    }
+
+    self.urlPasted = function() {
+        self.showError(false);
+        var isUrlValid = validateUrl(self.urlPaste());
+        self.validUrl(true);
+        if (isUrlValid){
+            setImageSrc(self.urlPaste());
+            imageExtension = getExtensionFromUrl(self.urlPaste());
+        } else {
+            const errMessage = "The image URL seems to be invalid. Please check that it points to an image. " +
+                            "You should be able to get an image URL by right clicking on the image in " + 
+                            " your browser and selecting 'Copy image address'. Valid image files are jpg, jpeg, png or gif " +
+                            "(an example is https://www.patagoniapenguins.org/image/penguin1.png)";
+            showErrorMessage(errMessage);
+        }
+
+    }
+
     var initShowHide = function() {
         self.showUploadForm(true);
         self.showUploadStep1(true);
@@ -47,8 +86,9 @@ var AppModel = function() {
         self.testImageSrc(imageSrc);
     }
 
-    var readUrl = function(input) {
+    var readInput = function(input) {
         if (input.files && input.files[0]) {
+            imageExtension = input.files[0].type;
             var reader = new FileReader();
             reader.onload = function(e) {
                 setImageSrc(e.target.result);
@@ -59,15 +99,34 @@ var AppModel = function() {
 
     var uploadFailed = function(error) {
         console.log('The server returned an error', error);
-        self.showError(true);
+        showErrorMessage("An error occurred during processing. Please try again.");
         self.showUploadForm(false);
     }
 
     var populateResults = function(data) {
-        var resultModel = new ResultModel(data);
-        self.result(new ResultModel(data));
+        const resultModel = new ResultModel(data, self.imageWidth, self.imageHeight, self.testImageSrc());
+        self.result(resultModel);
         self.showUploadForm(false);
         self.showResults(true);
+    }
+
+    var validateUrl = function(imageUrl){
+        const regexString = "(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|jpeg|png|gif))(?:\\?([^#]*))?(?:#(.*))?";
+        const regex = new RegExp(regexString);
+        return regex.test(imageUrl);
+    }
+
+    var getExtensionFromUrl = function(imageUrl){
+        const lastDot = imageUrl.lastIndexOf('.');
+        var ext = imageUrl.substring(lastDot+1);
+        if (ext == 'jpg') { ext = 'jpeg'; } 
+        ext = 'image/' + ext;
+        return ext;
+    }
+
+    var showErrorMessage = function(message) {
+        self.showError(true);
+        self.errorMessage(message);
     }
 
     // mock the server call
@@ -97,8 +156,24 @@ var AppModel = function() {
     }
 
     var submitToServer = function(){
-        var url = "http://127.0.0.1:5000/upload" // server url;
-        var data = { "image_base_64": self.testImageSrc() }
+        // server url
+        const url = "http://127.0.0.1:5000/upload";
+        var data = {};
+        
+        if (self.validUrl()) {
+            data = { 
+                "image_type": "URL",
+                "image_url": self.urlPaste(),
+                "image_ext": imageExtension
+            };
+        } else {
+            data = { 
+                "image_type": "BASE64",
+                "image_base_64": self.testImageSrc(),
+                "image_ext": imageExtension
+            };
+        }
+       
         $.ajax({
             url: url,
             type: 'POST',

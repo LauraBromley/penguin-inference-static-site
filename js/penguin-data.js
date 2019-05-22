@@ -6,6 +6,7 @@ var PenguinData = function() {
     self.getPenguin = function(category){
         switch(category) {
             case "snares" : return Snares;
+            case "adelie" : return Adelie;
             case "king" : return King;
             case "emperor" : return Emperor;
             case "rockhopper" : return Rockhopper;
@@ -19,12 +20,15 @@ var PenguinData = function() {
             case "macaroni" : return Macaroni;
             case "magellanic" : return Magellanic;
             case "royal" : return Royal;
+            case "fiordland": return Fiordland;
+            case "yellow_eyed": return YellowEyed;
             default: return null;
         }
     }
 
     const Snares = 
     {
+        title: "Snares Penguin",
         img_src: "images/snares.jpg",
         photo_by : "lin padgham",
         photo_by_link: "https://www.flickr.com/photos/22527731@N05",
@@ -35,6 +39,7 @@ var PenguinData = function() {
     }
 
     const King = {
+        title: "King Penguin",
         img_src: "images/king.jpg",
         photo_by : "David Stanley",
         photo_by_link: "https://www.flickr.com/photos/davidstanleytravel/",
@@ -45,6 +50,7 @@ var PenguinData = function() {
     }
 
     const Emperor = {
+        title: "Emperor Penguin",
         img_src: "images/emperor.jpg",
         photo_by : "Christopher Michel",
         photo_by_link: "https://www.flickr.com/photos/cmichel67/",
@@ -55,6 +61,7 @@ var PenguinData = function() {
     }
 
     const Rockhopper = {
+        title: "Rockhopper Penguin",
         img_src: "images/rockhopper.jpg",
         photo_by : "Pablo Fernicola",
         photo_by_link: "https://www.flickr.com/photos/fernicola/",
@@ -65,6 +72,7 @@ var PenguinData = function() {
     }
 
     const Gentoo = {
+        title: "Gentoo Penguin",
         img_src: "images/gentoo.jpg",
         photo_by : "Laura Bromley",
         photo_by_link: "https://www.flickr.com/photos/146843906@N04/",
@@ -75,6 +83,7 @@ var PenguinData = function() {
     }
 
     const Adelie = {
+        title: "Adelie Penguin",
         img_src: "images/adelie.jpg",
         photo_by : "David Cook",
         photo_by_link: "https://www.flickr.com/photos/kookr/",
@@ -85,6 +94,7 @@ var PenguinData = function() {
     }
 
     const Chinstrap = {
+        title: "Chinstrap Penguin",
         img_src: "images/chinstrap.jpg",
         photo_by : "Scott Ableman",
         photo_by_link: "https://www.flickr.com/photos/ableman/",
@@ -95,6 +105,7 @@ var PenguinData = function() {
     }
 
     const African = {
+        title: "African Penguin",
         img_src: "images/african.jpg",
         photo_by : "Bernard DUPONT",
         photo_by_link: "https://www.flickr.com/photos/berniedup/",
@@ -105,6 +116,7 @@ var PenguinData = function() {
     }
 
     const ErectCrested = {
+        title: "ErectCrested Penguin",
         img_src: "images/erect_crested.jpg",
         photo_by : "https://www.flickr.com/photos/nznavy/",
         photo_by_link: "Royal New Zealand Navy",
@@ -115,6 +127,7 @@ var PenguinData = function() {
     }
 
     const Fiordland = {
+        title: "Fiordland Penguin",
         img_src: "images/fiordland.jpg",
         photo_by : "travelwayoflife",
         photo_by_link: "https://www.flickr.com/photos/travelwayoflife",
@@ -125,6 +138,7 @@ var PenguinData = function() {
     }
 
     const Galapagos = {
+        title: "Galapagos Penguin",
         img_src: "images/galapagos.jpg",
         photo_by : "Allan Harris",
         photo_by_link: "https://www.flickr.com/photos/allan_harris/",
@@ -135,6 +149,7 @@ var PenguinData = function() {
     }
 
     const Humboldt = {
+        title: "Humboldt Penguin",
         img_src: "images/humboldt.jpg",
         photo_by : "OZinOH",
         photo_by_link: "https://www.flickr.com/photos/75905404@N00/",
@@ -145,6 +160,7 @@ var PenguinData = function() {
     }
 
     const Little = {
+        title: "Little Penguin",
         img_src: "images/little.jpg",
         photo_by : "Harvey Barrison",
         photo_by_link: "https://www.flickr.com/photos/hbarrison/",
@@ -155,6 +171,7 @@ var PenguinData = function() {
     }
 
     const Macaroni = {
+        title: "Macaroni Penguin",
         img_src: "images/macaroni.jpg",
         photo_by : "Dave M",
         photo_by_link: "https://www.flickr.com/photos/asherian/",
@@ -165,6 +182,7 @@ var PenguinData = function() {
     }
 
     const Magellanic = {
+        title: "Magellanic Penguin",
         img_src: "images/magellanic.jpg",
         photo_by : "Laura Bromley",
         photo_by_link: "https://www.flickr.com/photos/146843906@N04",
@@ -175,6 +193,7 @@ var PenguinData = function() {
     }
 
     const Royal = {
+        title: "Royal Penguin",
         img_src: "images/royal.jpg",
         photo_by : "Natalie Tapson",
         photo_by_link: "https://www.flickr.com/photos/40325561@N04/",
@@ -185,7 +204,8 @@ var PenguinData = function() {
     }
 
     const YellowEyed = {
-        img_src: "images/royal.jpg",
+        title: "Yellow Eyed Penguin",
+        img_src: "images/yellow_eyed.jpg",
         photo_by : "Bernard Spragg",
         photo_by_link: "https://www.flickr.com/photos/volvob12b/",
         orig_photo_link: "https://www.flickr.com/photos/volvob12b/15238441601/",
