@@ -156,25 +156,31 @@ var AppModel = function() {
     }
 
     var submitToServer = function(){
-        // server url
-        const url = "http://127.0.0.1:5000/upload";
+        // server url to aws lambda function
+        const url = "{$API_URL}";
         var data = {};
         
         if (self.validUrl()) {
             data = { 
-                "image_type": "URL",
+                "image_format": "URL",
                 "image_url": self.urlPaste(),
-                "image_ext": imageExtension
+                "image_file_type": imageExtension
             };
         } else {
             data = { 
-                "image_type": "BASE64",
+                "image_format": "BASE64",
                 "image_base_64": self.testImageSrc(),
-                "image_ext": imageExtension
+                "image_file_type": imageExtension
             };
+        }
+
+        // api key authentication
+        header =  {
+            "x-api-key": "{$API_KEY}"
         }
        
         $.ajax({
+            headers: header,
             url: url,
             type: 'POST',
             crossDomain: true,
@@ -184,7 +190,9 @@ var AppModel = function() {
             success: function(data) {
                 populateResults(data);
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function(xhr, status, thrownError) {
+                console.log('response error: ' + xhr.responseText);
+                console.log('status:' + status);
                 uploadFailed(thrownError);
             }
         });
