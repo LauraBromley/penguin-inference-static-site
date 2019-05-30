@@ -24,6 +24,7 @@ var AppModel = function() {
     self.showUploadStep2 = ko.observable();
     self.showResults = ko.observable();
     self.showError = ko.observable();
+    self.processing = ko.observable();
 
     // image extention
     var imageExtension = "";
@@ -38,6 +39,7 @@ var AppModel = function() {
     }
 
     self.doProcess = function() {
+        self.processing(true);
         submitToServer();
     }
 
@@ -78,6 +80,7 @@ var AppModel = function() {
         self.showUploadStep2(false);
         self.showResults(false);
         self.showError(false);
+        self.processing(false);
     }
 
     var setImageSrc = function(imageSrc) {
@@ -157,7 +160,7 @@ var AppModel = function() {
 
     var submitToServer = function(){
         // server url to aws lambda function
-        const url = "{$API_URL}";
+        const url = "@API_URL@";
         var data = {};
         
         if (self.validUrl()) {
@@ -176,7 +179,7 @@ var AppModel = function() {
 
         // api key authentication
         header =  {
-            "x-api-key": "{$API_KEY}"
+            "x-api-key": "@API_KEY@"
         }
        
         $.ajax({
