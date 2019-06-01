@@ -13,12 +13,60 @@
     </div>
     <div class="header2"></div>
 </div>
-<div class="container">
+<div class="container article">
     <p>Back to the <a href="@DOMAIN@/which-penguin/">Penguin Identifier</a></p>
-    <h1>How the Penguin Identifier was made</h1>
-    <h2>Training a Deep Learning Image Classifier using fastai</h2>
-    <p>Fastai course, penguins images from google search etc</p>
-    <h2>Implementing on AWS</h2>
-    <p>lambda function, API gateway, layers, using docker to generate dependencies</p>
+    <h2>How the Penguin Identifier was made</h2>
+    <p>
+        This Penguin Identifier application uses machine learning (also known as deep learning) to predict the species of penguin when provided with an image.  In a nutshell, this involves creating a set of images of penguins which have already been categorised. This 'training set' gets fed into the machine learning algorithm, and the machine 'learns' by using these examples to determine the important features of each type of penguin. The result of this training is a model which can (in theory) be used to predict the species of penguin from any image. I should point out that this application has been trained especially to recognise penguins, so if an image that is not a penguin is submitted, you will get strange results!
+    </p>
+    <p>
+        Just a few years ago it would have taken thousands of input images to train a model, but due to advances in the field of machine learning it is now possbile to create reasonably good predictions with a training set of a few hundred images. For this application, the training set contains around 150-170 images for each type of penguin. It currently has a success rate of 92% which I am working on improving.
+    </p>
+    <h4>Interested to learn more about machine learning?</h4>
+    <p>
+        There are various online courses that teach machine learning, I took the <a href="https://course.fast.ai">Practical Deep Learning for Coders</a> online course provided by fast.ai. It is a really great introduction to deep learning, as it gets you up and running really quickly (even if you don't fully understand how it all works). The only pre-requisite is that you have some experience of coding with python. The course does involve some maths, but nothing too scary and you certainly don't need a PHD.
+    </p>
+        
+    <h2>How I trained the model</h2>
+    <h4>Technical Details</h4>
+    <p>
+        The model was trained using the fast.ai python library, which is built on top of PyTorch. The algorithm used is a convolutional neural network, with a Resnet34 architecture, trained on a Windows machine with a NVIDIA GeForce GTX 1050 GBU which has 2GB memory. The model was trained using the default settings, as recommended during the fast.ai course mentioned above. The actual machine training time took less than 2 hours, however I spent much longer trying to make the training set images as good as possible. I think this was my main take-away from the fast.ai course - the trained model will only be as good as the data you put into it. I think applies to machine learning in general, the input data is the most important thing.
+    </p>
+    <h4>Deploying the model</h4>
+    <p>
+        As it turned out, using machine learning to train my model was the more straightforward aspect of making this website. The part that took much longer was figuring out how to deploy my  model so that it could be accessed by a website to run predictions. I decided to make an Amazon Web Services Lambda function, which allows you to run code without needing to set up a dedicated server. This became an issue when I discovered that there are limits on the size of code (including dependencies) that you can upload to a Lamdba function. I wanted to use the fastai library, but the library and it's dependencies were way bigger than the allowed limits. If you are interested in finding out how I got it working, the server-side code is in <a href="https://github.com/LauraBromley/penguin-inference-api">this GitHub repository</a>. Notes on how I got the AWS Lambda function to work are <a href="https://github.com/LauraBromley/penguin-inference-api/blob/master/aws-layer/README.md">here</a>.
+    </p>
+    <h4>Image orientation</h4>
+    <p>One of the things I noticed is that when photographs are uploaded to a web browser they are not always the correct orientation, for example they were taken in portrait mode but they display as landscape. When I passed these images to my model it was failing to classify them.  Cameras (including phones) record the orientation data encoded in the image file itself. This is known as <a href="https://en.wikipedia.org/wiki/Exif">Exif data</a>. My server side code includes a check on this data and rotates the image accordingly before passing it to the model. I also noticed that some images work better if they are zoomed in slightly. So I added some code to crop each image by 10% and compare the result with the non-cropped version.</p>
+
+
+    <h2>Machine Learning with Penguins</h2>
+    <p>
+        There are 17 species of penguins. The first thing I noticed when I started, is that there are distinct groups of similar looking penguins - see <a href="@DOMAIN@/which-penguin/penguin-types">Penguin Types</a>. I thought it would be interesting to see if a machine leaning algorithm could distinguish between them.
+    </p>
+    <p>
+        I did a google image search for each species, and downloaded the images into separate folders to create my training set, so I had a folder for each species (the fast.ai course covers how to automate this process). At this initial stage I had about 200 images for each penguin. I then looked through the images to check what I had and worked on improving the set of images.
+    </p>
+    <p>This involved the following:
+    <ul>
+        <li>Removing images that were not penguins.</li>
+        <li>Removing cartoons, drawings, images of toys.</li>
+        <li>Moving images that were in the wrong folder (eg a king penguin in the emperor folder).</li>
+        <li>Removing images taken from a distance, where the penguins are too small.</li>
+        <li>Removing images of chicks, as they look very different to the adults (I hope to include penguin chicks in a future version).</li>
+    </ul>
+    </p>
+    
+    <p>
+        I also noticed that I had a lot of images containing multiple birds, so I cropped out individuals into their own image where possible. This process took about half an hour for each set of photos, which was quite a lot of manual effort, compared to the machine learning training time. It's just as well that I like looking at pictures of penguins!
+    </p>
+            
+    <p>Interesting things I learned about penguins, that I plan to investigate further:
+        <ul>
+            <li>Penguins like to hang around in colonies. It is rare to get a photo of an individual penguin. I don't know if this confuses the model, or whether it is just realistic, since images used for prediction will often contain multiple penguins. Most of the time the image will contain penguins of the same species.</li>
+            <li>Penguins are generally the same shape and colour (i.e. black back, white front). Most distinguishing features are in the head, for example if the penguin has a crest. The fast.ai algorith, applies transformations to the images, including cropping them to a square. I am concerned that this might result in some of the distinguishing features to be lost if they are at the top of the image and are being croped out.</li>
+            <li>Certain species are very difficult to tell apart from a human perspective, e.g. Humboldt/Magellanic. As as expected, the model does struggle to distinguish between these species. I would like to work on improving this.</li>
+        </ul>
+    </p>
 </div>
 </body>

@@ -1,0 +1,38 @@
+<!doctype html>
+<head>
+<title>Penguin Identifier</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel= "stylesheet" type= "text/css" href= "css/styles.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/penguin-data.js"></script>
+<script type="text/javascript" src="js/penguin-set-model.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="header">
+            <img src="images/penguin-logo.jpg" class="rounded-circle float-left">
+            <h1 class="float-left">Penguin Identifier</h1>
+        </div>
+        <div class="header2"></div>
+    </div>
+    <div class="container">
+        <h1>Types of Penguins</h1>
+            <p>Return to <a href="@DOMAIN@/which-penguin/">Penguin Identifier</a> or <a href="@DOMAIN@/which-penguin/how-it-was-made">How the Penguin Identifier was made</a>.
+            <div data-bind="foreach: penguinSets">
+                <h3 data-bind="text:heading"></h3>
+                    <div data-bind="foreach: infoSet" class="row">
+                            <div class="col-sm-3">
+                                <p data-bind="text:title"></p>
+                                <div class="image-set-container">
+                                    <img class="img-resp" data-bind="attr: { src: imageSrc, alt: title }">
+                                </div>
+                                <p class="caption"><a data-bind="attr: { href: origPhotoLink }">Photo</a> by 
+                                                    <a data-bind="attr: { href: photoByLink }"><span data-bind="text: photoBy"></span></a>
+                                </p> 
+                            </div>
+                </div> 
+            </div>
+    </div>
+</body>
+

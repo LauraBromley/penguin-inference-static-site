@@ -28,7 +28,6 @@ var CategoryInfo = function(data) {
     }
 }
 
-
 var ResultModel = function(data, imageWidth, imageHeight, imageSrc) {
   
     resultModel = this;

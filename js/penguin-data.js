@@ -3,6 +3,11 @@
 var PenguinData = function() {
     var self = this;
 
+    self.crestPenguins = ["snares", "rockhopper", "erect_crested", "macaroni","royal", "fiordland"];
+    self.amPenguins = ["humboldt", "magellanic", "galapagos", "african"];
+    self.anPenguins = ["emperor", "king", "adelie", "gentoo", "chinstrap"];
+    self.ausPenguins = ["little", "yellow_eyed"];
+
     self.getPenguin = function(category){
         switch(category) {
             case "snares" : return Snares;
@@ -25,9 +30,8 @@ var PenguinData = function() {
             default: return null;
         }
     }
-
-    const Snares = 
-    {
+    
+    const Snares = {
         title: "Snares Penguin",
         img_src: "images/snares.jpg",
         photo_by : "lin padgham",
@@ -116,7 +120,7 @@ var PenguinData = function() {
     }
 
     const ErectCrested = {
-        title: "ErectCrested Penguin",
+        title: "Erect Crested Penguin",
         img_src: "images/erect_crested.jpg",
         photo_by : "https://www.flickr.com/photos/nznavy/",
         photo_by_link: "Royal New Zealand Navy",
