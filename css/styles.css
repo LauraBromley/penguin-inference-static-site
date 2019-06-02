@@ -1,14 +1,90 @@
+@media (min-width: 1200px) {
+    .main-section {
+        padding-left: 200px;
+        padding-right: 200px;
+    }
+
+    .image-container {
+        width: 400px;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .image-set-container {
+        width: 300px;
+        height: 400px;
+        overflow: hidden;
+    }
+
+    .container-box {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+    .main-section {
+        padding-left: 50px;
+        padding-right: 50px;
+    } 
+    
+    .image-container {
+        width: 400px;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .image-set-container {
+        width: 300px;
+        height: 400px;
+        overflow: hidden;
+    }
+
+    .container-box {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 767px) {
+
+    h1.header-text {
+        font-size: 1.5em;
+    }
+    
+    .image-container {
+        width: 200px;
+        height: 150px;
+        overflow: hidden;
+    }
+
+    .image-set-container {
+        width: 150px;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .container-box {
+        font-size: 0.75em;
+        padding: 15px;
+    }
+
+    .container-box h4 {
+        font-size: 1.25em;
+    }
+
+    .container-box h2 {
+        font-size: 1.75em;
+    }
+
+}
+
+
 .img-resp {
     width: auto;
     max-height: 100%;
     object-fit: contain;
 }
 
-.image-container {
-    width: 400px;
-    height: 300px;
-    overflow: hidden;
-}
+
 
 .link-btn {
     margin-top: 10px;
@@ -27,6 +103,7 @@
 .header h1 {
     margin-top: 20px;
     margin-left: 20px;
+    padding-left: 100px;
 }
 
 .header2 {
@@ -44,7 +121,6 @@
 }
 
  .container-box {
-     padding: 30px;
      border: #45627E 1px solid;
      margin-bottom: 5px;
  }
@@ -70,8 +146,3 @@
      margin-top: 5px;
      margin-bottom: 10px;
  }
-
- .image-set-container {
-    width: 200px;
-    height: 150px;
-}

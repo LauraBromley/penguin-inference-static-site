@@ -66,9 +66,7 @@ var AppModel = function() {
             imageExtension = getExtensionFromUrl(self.urlPaste());
         } else {
             const errMessage = "The image URL seems to be invalid. Please check that it points to an image. " +
-                            "You should be able to get an image URL by right clicking on the image in " + 
-                            " your browser and selecting 'Copy image address'. Valid image files are jpg, jpeg, png or gif " +
-                            "(an example is https://www.patagoniapenguins.org/image/penguin1.png)";
+                            "(an example is https://www.patagoniapenguins.org/image/curious-penguin.jpg)";
             showErrorMessage(errMessage);
         }
 

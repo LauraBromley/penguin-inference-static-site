@@ -1,5 +1,7 @@
 <!doctype html>
 <head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Penguin Identifier</title>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
@@ -17,27 +19,26 @@
 <div class="container-fluid">
     <div class="header">
         <img src="images/penguin-logo.jpg" class="rounded-circle float-left">
-        <h1 class="float-left">Penguin Identifier</h1>
+        <h1 class="header-text">Penguin Identifier</h1>
     </div>
     <div class="header2"></div>
 </div>
-<div class="container">
-    <p>There are <a href="@DOMAIN@/which-penguin/penguin-types">17 species of penguins</a> (only a few of them can be found in Patagonia!). Try submitting an image of a penguin and see if our Penguin Identifier can recognise the species. Images can be a file or photograph from your phone or computer (click Choose Image below), or you can paste a link to an image URL from another website. It depends on your browser, but it should be possible to get an image URL by right-clicking on an image and selecting "Copy Image Address".</p>
-    <p>This application can only recognise penguins, so images of other things will give unpredictable results! Penguin Identifier uses machine learning to predict the penguin species. For more information see <a href="@DOMAIN@/which-penguin/how-it-was-made">how it was made.</a>
-    <p>Return to <a href="@DOMAIN@">Patagonia Penguins</a></p>
-
+<div class="container-fluid main-section">
+    <p>There are <a href="@DOMAIN@/which-penguin/penguin-types">17 species of penguins</a> (only a few of them can be found in Patagonia!). Try submitting an image of a penguin and see if our Penguin Identifier can recognise the species. Images can be a file or photograph from your phone or computer (click Choose Image below), or you can paste a link to an image URL from another website.</p>
+    <p>This application can only recognise penguins, so images of other things will give unpredictable results!</p>
+ 
     <!-- Upload Image -->
     <div data-bind="if: showUploadForm">
         <div class="container-box">
             <div data-bind="if: showUploadStep1">
-                <h1>Select an image</h1>
+                <h2>Select an image</h2>
                 <p>Choose an image of a penguin, and we will try and identify the species.</p>
                 <label class="btn btn-info btn-lg">
                     Choose Image 
                     <input type="file" name="file" id="image-file" accept="image/jpeg, image/png, image/gif" style="display: none;"
                             data-bind="event: { change: fileSelected }">
                 </label>
-                <h3>or</h3> <p>Paste a URL for an image below:</p>
+                <h2>or</h2> <p>Paste a URL for an image below:</p>
                 <div class="input-group">
                     <input type="text" name="imageUrl" class="form-control" data-bind="value: urlPaste">
                     <div class="input-group-append">
@@ -47,7 +48,7 @@
             </div>
             <div data-bind="if: showUploadStep2">
                 <div class="image-container">
-                    <img id="uploaded-image" class="img-resp" data-bind="event: { load: imageLoaded }, attr: { src: testImageSrc }" >
+                    <img id="uploaded-image" class="img-fluid" data-bind="event: { load: imageLoaded }, attr: { src: testImageSrc }" >
                 </div>
                 <div data-bind="ifnot: processing">
                     <button data-bind="click: doProcess" id="do-submit" class="btn btn-info btn-lg link-btn">Identify this penguin</button>
@@ -103,7 +104,7 @@
                     <div class = "info-box alert alert-info">
                         <h4><span data-bind="text: categoryItem.title"></span></h4>
                         <div class="image-container">
-                            <img class="img-resp" data-bind="attr: { src: categoryItem.imageSrc, alt: prediction.displayCategory }">
+                            <img class="img-fluid" data-bind="attr: { src: categoryItem.imageSrc, alt: prediction.displayCategory }">
                         </div>
                         <p class="caption"><a data-bind="attr: { href: categoryItem.origPhotoLink }">Photo</a> by 
                                             <a data-bind="attr: { href: categoryItem.photoByLink }"><span data-bind="text: categoryItem.photoBy"></span></a>
@@ -129,5 +130,10 @@
         </div> 
         <a href="#" data-bind="click: tryAnother" class="btn btn-info btn-lg"> Try again</a>
     </div>
+
+
+    <p>Penguin Identifier uses machine learning to predict the penguin species. For more information see <a href="@DOMAIN@/which-penguin/how-it-was-made">how it was made.</a>
+    <p>Return to <a href="@DOMAIN@">Patagonia Penguins</a></p>
+    
 </div>
 </body>

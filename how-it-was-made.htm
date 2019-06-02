@@ -1,5 +1,7 @@
 <!doctype html>
 <head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Penguin Identifier</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel= "stylesheet" type= "text/css" href= "css/styles.css">
@@ -13,7 +15,7 @@
     </div>
     <div class="header2"></div>
 </div>
-<div class="container article">
+<div class="container-fluid main-section">
     <p>Back to the <a href="@DOMAIN@/which-penguin/">Penguin Identifier</a></p>
     <h2>How the Penguin Identifier was made</h2>
     <p>
@@ -30,7 +32,7 @@
     <h2>How I trained the model</h2>
     <h4>Technical Details</h4>
     <p>
-        The model was trained using the fast.ai python library, which is built on top of PyTorch. The algorithm used is a convolutional neural network, with a Resnet34 architecture, trained on a Windows machine with a NVIDIA GeForce GTX 1050 GBU which has 2GB memory. The model was trained using the default settings, as recommended during the fast.ai course mentioned above. The actual machine training time took less than 2 hours, however I spent much longer trying to make the training set images as good as possible. I think this was my main take-away from the fast.ai course - the trained model will only be as good as the data you put into it. I think applies to machine learning in general, the input data is the most important thing.
+        The model was trained using the fast.ai python library, which is built on top of PyTorch. The algorithm used is a convolutional neural network, with a Resnet34 architecture, trained on a Windows machine with a NVIDIA GeForce GTX 1050 GBU which has 2GB memory. The model was trained using the default settings, as recommended during the fast.ai course mentioned above. The actual machine training time took less than 2 hours, however I spent much longer trying to make the training set images as good as possible. This was my main takeaway from the fast.ai course - the trained model will only be as good as the data you put into it. I think this applies to machine learning in general, the input data is the most important aspect.
     </p>
     <h4>Deploying the model</h4>
     <p>

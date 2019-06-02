@@ -122,8 +122,8 @@ var PenguinData = function() {
     const ErectCrested = {
         title: "Erect Crested Penguin",
         img_src: "images/erect_crested.jpg",
-        photo_by : "https://www.flickr.com/photos/nznavy/",
-        photo_by_link: "Royal New Zealand Navy",
+        photo_by : " Royal New Zealand Navy",
+        photo_by_link: "https://www.flickr.com/photos/nznavy/",
         orig_photo_link: "https://www.flickr.com/photos/nznavy/39811757054",
         info: "The erect crested penguin has black upper parts, white underparts and a yellow eye stripe and crest.",
         location: "Bounty and Antipodes Islands, New Zealand.",
